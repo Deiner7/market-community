@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Publicar Producto</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<h2>Publicar Prenda</h2>
+
+<form action="../../backend/publicar.php" method="POST" enctype="multipart/form-data">
+
+    <label>Título:</label><br>
+    <input type="text" name="titulo" required><br><br>
+
+    <label>Descripción:</label><br>
+    <textarea name="descripcion" required></textarea><br><br>
+
+    <label>Precio:</label><br>
+    <input type="number" name="precio" required><br><br>
+
+    <label>Imagen:</label><br>
+    <input type="file" name="imagen" required><br><br>
+
+    <button type="submit">Publicar</button>
+
+</form>
+<script src="../js/producto.js"></script>
+</body>
+</html>

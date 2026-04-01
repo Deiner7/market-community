@@ -3,14 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>MarketCommunity</title>
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="../frontend/css/style.css">
 </head>
+<nav>
+    <h2>MarketCommunity</h2>
 
+    <a href="index.html">Inicio</a>
+    <a href="pages/publicar.html">Publicar</a>
+    <a href="pages/perfil.html">Mi perfil</a>
+
+    <span id="usuario-info"></span>
+    <button id="logout-btn" style="display:none;">Cerrar sesión</button>
+</nav>
 <body>
 
 <h1>MarketCommunity</h1>
 
-<p>Plataforma de compra, venta y donación de ropa de segunda mano.</p>
+<h2>Productos disponibles</h2>
+
+<div id="contenedor-productos"></div>
+
+<script src="js/app.js"></script>
+<script src="js/sesion.js"></script>
 
 </body>
 </html>
