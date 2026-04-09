@@ -26,13 +26,13 @@ fetch(`http://localhost/market-community/backend/obtener_producto.php?id=${id}`)
     .catch(error => console.error("Error:", error));
 
 
-// 🔥 Función enviar mensaje (MEJORADA)
+//  Función enviar mensaje (MEJORADA)
 function enviarMensaje(destinatarioId) {
 
     const mensaje = document.getElementById("mensaje").value;
     const respuesta = document.getElementById("respuesta");
 
-    // 🔴 Validación
+    //  Validación
     if (mensaje.trim() === "") {
         respuesta.textContent = "El mensaje no puede estar vacío";
         respuesta.style.color = "red";

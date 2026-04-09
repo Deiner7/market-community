@@ -36,7 +36,7 @@ fetch("http://localhost/market-community/backend/obtener_mis_productos.php")
     .catch(error => console.error("Error:", error));
 
 
-// 🔴 FUNCIÓN ELIMINAR
+//  FUNCIÓN ELIMINAR
 function eliminarProducto(id) {
 
     if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
@@ -56,7 +56,7 @@ function eliminarProducto(id) {
 }
 
 
-// 🟢 FUNCIÓN EDITAR
+//  FUNCIÓN EDITAR
 function editarProducto(id) {
     window.location.href = `editar.html?id=${id}`;
 }

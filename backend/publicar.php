@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $precio = trim($_POST["precio"]);
     $id_usuario = $_SESSION["usuario_id"];
 
-    // 🔴 Validación
+    //  Validación
     if (empty($titulo) || empty($descripcion) || empty($precio)) {
         echo "Todos los campos son obligatorios";
         exit();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     move_uploaded_file($imagen_tmp, $ruta);
 
-    // 🔐 Consulta segura
+    //  Consulta segura
     $stmt = $conn->prepare("INSERT INTO productos (titulo, descripcion, precio, imagen, id_usuario) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssdsi", $titulo, $descripcion, $precio, $imagen_nombre, $id_usuario);
 
