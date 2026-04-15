@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 div.innerHTML = `
                     <p><strong>De:</strong> ${mensaje.nombre}</p>
                     <p>${mensaje.contenido}</p>
+
+                    <button onclick="irChat(${mensaje.remitente})">
+                        Abrir chat
+                    </button>
+
                     <hr>
                 `;
 
@@ -33,3 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error:", error));
 
 });
+
+//  FUNCIÓN PARA IR AL CHAT
+function irChat(usuarioId) {
+    window.location.href = `chat.html?usuario=${usuarioId}`;
+}
