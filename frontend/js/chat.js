@@ -11,6 +11,32 @@ fetch(`http://localhost/market-community/backend/obtener_usuario.php?id=${usuari
 
 const chat = document.getElementById("chat");
 
+const inputMensaje = document.getElementById("mensaje");
+
+//  Detectar escritura
+inputMensaje.addEventListener("input", () => {
+
+    fetch("http://localhost/market-community/backend/actualizar_escribiendo.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "estado=1"
+    });
+
+    clearTimeout(window.timer);
+
+    window.timer = setTimeout(() => {
+        fetch("http://localhost/market-community/backend/actualizar_escribiendo.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "estado=0"
+        });
+    }, 2000);
+});
+
 //  Cargar conversación
 function cargarChat() {
 
@@ -71,4 +97,23 @@ function enviarMensaje() {
 
 //  Auto carga
 cargarChat();
+
+const estadoUsuario = document.getElementById("estado-usuario");
+
+function verificarEscribiendo() {
+
+    fetch(`http://localhost/market-community/backend/obtener_estado.php?id=${usuario}`)
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.escribiendo == 1) {
+                estadoUsuario.innerText = "Escribiendo...";
+            } else {
+                estadoUsuario.innerText = "";
+            }
+
+        });
+}
+
 setInterval(cargarChat, 3000);
+setInterval(verificarEscribiendo, 2000);
