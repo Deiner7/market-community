@@ -1,7 +1,8 @@
 const params = new URLSearchParams(window.location.search);
-const usuario = params.get("usuario");
+const usuario = parseInt(params.get("usuario"));
 
 const nombreUsuario = document.getElementById("nombre-usuario");
+const estadoUsuario = document.getElementById("estado-usuario");
 
 fetch(`http://localhost/market-community/backend/obtener_usuario.php?id=${usuario}`)
     .then(res => res.json())
@@ -10,7 +11,6 @@ fetch(`http://localhost/market-community/backend/obtener_usuario.php?id=${usuari
     });
 
 const chat = document.getElementById("chat");
-
 const inputMensaje = document.getElementById("mensaje");
 
 //  Detectar escritura
@@ -48,35 +48,32 @@ function cargarChat() {
 
             data.forEach(msg => {
 
-    const div = document.createElement("div");
-    div.classList.add("mensaje");
+                const div = document.createElement("div");
+                div.classList.add("mensaje");
 
-    //  CALCULAR HORA PARA TODOS
-    const fecha = new Date(msg.fecha_envio);
-    const hora = fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const fecha = new Date(msg.fecha_envio);
+                const hora = fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    if (msg.remitente == usuario) {
-        div.classList.add("otro");
-    } else {
-        div.classList.add("mio");
-    }
+                if (msg.remitente == usuario) {
+                    div.classList.add("otro");
+                } else {
+                    div.classList.add("mio");
+                }
 
-    //  APLICAR A TODOS LOS MENSAJES
-    div.innerHTML = `
-        ${msg.contenido}
-        <br><small>${hora}</small>
-    `;
+                div.innerHTML = `
+                    ${msg.contenido}
+                    <br><small>${hora}</small>
+                `;
 
-    chat.appendChild(div);
-});
+                chat.appendChild(div);
+            });
 
-            //  SCROLL AL FINAL (CORRECTO)
             chat.scrollTop = chat.scrollHeight;
 
         });
 }
 
-//  Enviar mensaje
+// Enviar mensaje
 function enviarMensaje() {
 
     const texto = document.getElementById("mensaje").value;
@@ -95,25 +92,44 @@ function enviarMensaje() {
     });
 }
 
-//  Auto carga
-cargarChat();
+//  Actualizar actividad (online)
+function actualizarActividad() {
+    fetch("http://localhost/market-community/backend/actualizar_actividad.php");
+}
 
-const estadoUsuario = document.getElementById("estado-usuario");
-
-function verificarEscribiendo() {
+//  Estado combinado
+function verificarEstado() {
 
     fetch(`http://localhost/market-community/backend/obtener_estado.php?id=${usuario}`)
         .then(res => res.json())
         .then(data => {
 
             if (data.escribiendo == 1) {
-                estadoUsuario.innerText = "Escribiendo...";
+                estadoUsuario.innerText = "✍️ Escribiendo...";
             } else {
-                estadoUsuario.innerText = "";
+
+                fetch(`http://localhost/market-community/backend/estado_online.php?id=${usuario}`)
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (data.estado === "online") {
+                            estadoUsuario.innerText = "🟢 En línea";
+                        } else {
+                            estadoUsuario.innerText = "⚫ Desconectado";
+                        }
+
+                    });
             }
 
         });
 }
 
+//  AUTO EJECUCIÓN
+cargarChat();
+
+//  CLAVE: marcar actividad desde el inicio
+actualizarActividad();
+
 setInterval(cargarChat, 3000);
-setInterval(verificarEscribiendo, 2000);
+setInterval(verificarEstado, 2000);
+setInterval(actualizarActividad, 5000);
