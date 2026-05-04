@@ -1,44 +1,54 @@
-console.log("JS cargado");
 document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("JS cargado");
 
     const contenedor = document.getElementById("contenedor-productos");
     const buscador = document.getElementById("buscador");
 
-    console.log("Buscador:", buscador);
-
-    //  Función para cargar productos
+    // Cargar productos
     function cargarProductos(query = "") {
-
-        console.log("Buscando:", query);
 
         fetch(`http://localhost/market-community/backend/buscar_productos.php?q=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(data => {
 
-                console.log("Resultados:", data);
-
                 contenedor.innerHTML = "";
 
                 if (data.length === 0) {
-                    contenedor.innerHTML = "<p>No se encontraron productos</p>";
+                    contenedor.innerHTML = `
+                        <p class="sin-productos">
+                            No se encontraron productos
+                        </p>
+                    `;
                     return;
                 }
 
                 data.forEach(producto => {
 
                     const div = document.createElement("div");
+                    div.classList.add("card-producto");
 
-                    div.innerHTML = `
-                        <h3>
-                            <a href="pages/producto.html?id=${producto.id_producto}">
-                                ${producto.titulo}
-                            </a>
-                        </h3>
-                        <img src="../uploads/${producto.imagen}" width="200">
-                        <p>Precio: $${producto.precio}</p>
-                    `;
+                    div.classList.add("card-producto");
+
+div.innerHTML = `
+    <div class="imagen-container">
+        <img src="../uploads/${producto.imagen}" alt="${producto.titulo}">
+    </div>
+
+    <div class="info-producto">
+
+        <h3>
+            <a href="pages/producto.html?id=${producto.id_producto}">
+                ${producto.titulo}
+            </a>
+        </h3>
+
+        <p class="precio">$${producto.precio}</p>
+
+        <a class="btn-ver" href="pages/producto.html?id=${producto.id_producto}">
+            Ver producto
+        </a>
+
+    </div>
+`;
 
                     contenedor.appendChild(div);
                 });
@@ -47,13 +57,12 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error:", error));
     }
 
-    //  Evento búsqueda
+    // Búsqueda en tiempo real
     buscador.addEventListener("input", () => {
-        console.log("Escribiendo:", buscador.value);
         cargarProductos(buscador.value);
     });
 
-    //  Inicial
+    // Inicial
     cargarProductos();
 
 });

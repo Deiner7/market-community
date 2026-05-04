@@ -4,39 +4,76 @@ fetch("http://localhost/market-community/backend/obtener_mis_productos.php")
 
         const contenedor = document.getElementById("mis-productos");
 
+        // VALIDAR LOGIN
         if (data.error) {
-            contenedor.innerHTML = "<p>Debes iniciar sesión</p>";
+
+            contenedor.innerHTML = `
+                <p class="sin-productos">
+                    Debes iniciar sesión
+                </p>
+            `;
+
             return;
         }
 
+        // SI NO HAY PRODUCTOS
+        if (data.length === 0) {
+
+            contenedor.innerHTML = `
+                <p class="sin-productos">
+                    No has publicado productos todavía
+                </p>
+            `;
+
+            return;
+        }
+
+        // RECORRER PRODUCTOS
         data.forEach(producto => {
 
             const div = document.createElement("div");
 
+            div.classList.add("card-producto");
+
             div.innerHTML = `
-                <h3>${producto.titulo}</h3>
-                <img src="../../uploads/${producto.imagen}" width="200">
-                <p>Precio: $${producto.precio}</p>
 
-                <button onclick="editarProducto(${producto.id_producto})">
-                    Editar
-                </button>
+                <div class="imagen-container">
+                    <img src="../../uploads/${producto.imagen}">
+                </div>
 
-                <button onclick="eliminarProducto(${producto.id_producto})">
-                    Eliminar
-                </button>
+                <div class="info-producto">
 
-                <hr>
+                    <h3>${producto.titulo}</h3>
+
+                    <p class="precio">
+                        $${producto.precio}
+                    </p>
+
+                    <div class="acciones-producto">
+
+                        <button onclick="editarProducto(${producto.id_producto})">
+                            ✏️ Editar
+                        </button>
+
+                        <button class="btn-eliminar"
+                            onclick="eliminarProducto(${producto.id_producto})">
+                            🗑️ Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
             `;
 
             contenedor.appendChild(div);
+
         });
 
     })
     .catch(error => console.error("Error:", error));
 
 
-//  FUNCIÓN ELIMINAR
+// ELIMINAR PRODUCTO
 function eliminarProducto(id) {
 
     if (!confirm("¿Seguro que quieres eliminar este producto?")) return;
@@ -50,13 +87,19 @@ function eliminarProducto(id) {
     })
     .then(response => response.text())
     .then(data => {
+
         alert(data);
+
         location.reload();
+
     });
+
 }
 
 
-//  FUNCIÓN EDITAR
+// EDITAR PRODUCTO
 function editarProducto(id) {
+
     window.location.href = `editar.html?id=${id}`;
+
 }

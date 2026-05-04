@@ -3,41 +3,112 @@
 session_start();
 include("conexion.php");
 
-// Verificar si el usuario está logueado
+// Verificar sesión
 if (!isset($_SESSION["usuario_id"])) {
     echo "Debes iniciar sesión";
     exit();
 }
 
+// Verificar método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Limpiar datos
     $titulo = trim($_POST["titulo"]);
     $descripcion = trim($_POST["descripcion"]);
     $precio = trim($_POST["precio"]);
     $id_usuario = $_SESSION["usuario_id"];
 
-    //  Validación
-    if (empty($titulo) || empty($descripcion) || empty($precio)) {
+    // Validar campos vacíos
+    if (
+        empty($titulo) ||
+        empty($descripcion) ||
+        empty($precio)
+    ) {
         echo "Todos los campos son obligatorios";
         exit();
     }
 
-    // Manejo de imagen
-    $imagen_nombre = $_FILES["imagen"]["name"];
-    $imagen_tmp = $_FILES["imagen"]["tmp_name"];
+    // Verificar imagen
+    if (!isset($_FILES["imagen"])) {
+        echo "Debes subir una imagen";
+        exit();
+    }
 
-    $ruta = "../uploads/" . $imagen_nombre;
+    // Datos de imagen
+    $imagen = $_FILES["imagen"];
 
-    move_uploaded_file($imagen_tmp, $ruta);
+    $nombre_original = $imagen["name"];
+    $tmp = $imagen["tmp_name"];
+    $tamano = $imagen["size"];
+    $error = $imagen["error"];
 
-    //  Consulta segura
-    $stmt = $conn->prepare("INSERT INTO productos (titulo, descripcion, precio, imagen, id_usuario) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdsi", $titulo, $descripcion, $precio, $imagen_nombre, $id_usuario);
+    // Validar errores de subida
+    if ($error !== 0) {
+        echo "Error al subir la imagen";
+        exit();
+    }
 
+    // Extensiones permitidas
+    $extensiones_permitidas = ["jpg", "jpeg", "png", "webp"];
+
+    // Obtener extensión
+    $extension = strtolower(pathinfo($nombre_original, PATHINFO_EXTENSION));
+
+    // Validar extensión
+    if (!in_array($extension, $extensiones_permitidas)) {
+        echo "Formato de imagen no permitido";
+        exit();
+    }
+
+    // Validar tamaño (2MB máximo)
+    $maximo = 2 * 1024 * 1024;
+
+    if ($tamano > $maximo) {
+        echo "La imagen es demasiado pesada";
+        exit();
+    }
+
+    // Validar que sea realmente imagen
+    $check = getimagesize($tmp);
+
+    if ($check === false) {
+        echo "El archivo no es una imagen válida";
+        exit();
+    }
+
+    // Crear nombre único
+    $nuevo_nombre = uniqid("producto_", true) . "." . $extension;
+
+    // Ruta destino
+    $ruta = "../uploads/" . $nuevo_nombre;
+
+    // Mover archivo
+    if (!move_uploaded_file($tmp, $ruta)) {
+        echo "Error al guardar la imagen";
+        exit();
+    }
+
+    // Guardar en BD
+    $stmt = $conn->prepare("
+        INSERT INTO productos
+        (titulo, descripcion, precio, imagen, id_usuario)
+        VALUES (?, ?, ?, ?, ?)
+    ");
+
+    $stmt->bind_param(
+        "ssdsi",
+        $titulo,
+        $descripcion,
+        $precio,
+        $nuevo_nombre,
+        $id_usuario
+    );
+
+    // Ejecutar
     if ($stmt->execute()) {
         echo "Producto publicado correctamente";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error al guardar producto";
     }
 
     $stmt->close();

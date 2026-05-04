@@ -6,24 +6,47 @@
 <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body class="auth-body">
 
-<h2>Registro de Usuario</h2>
+<div class="auth-container">
 
-<form action="../../backend/register.php" method="POST">
+    <div class="auth-card">
 
-    <label>Nombre:</label><br>
-    <input type="text" name="nombre" required><br><br>
+        <h2>Crear Cuenta</h2>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+        <form action="../../backend/register.php" method="POST">
 
-    <label>Contraseña:</label><br>
-    <input type="password" name="password" required><br><br>
+            <div class="input-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" required>
+            </div>
 
-    <button type="submit">Registrarse</button>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
 
-</form>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                Registrarse
+            </button>
+
+        </form>
+
+        <p class="auth-link">
+            ¿Ya tienes cuenta?
+            <a href="login.html">Inicia sesión</a>
+        </p>
+
+    </div>
+
+</div>
+
 <script src="../js/sesion.js"></script>
+
 </body>
 </html>

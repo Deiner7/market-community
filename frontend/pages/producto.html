@@ -8,9 +8,30 @@
 
 <body>
 
-<h2>Detalle del Producto</h2>
+<nav class="navbar">
 
-<div id="detalle-producto"></div>
+    <div class="logo">
+        <a href="../index.html">🛍️ MarketCommunity</a>
+    </div>
+
+    <div class="nav-links">
+        <a href="../index.html">Inicio</a>
+        <a href="perfil.html">Mi perfil</a>
+        <a href="mensajes.html">Mensajes</a>
+    </div>
+
+    <div class="nav-user">
+        <span id="usuario-info"></span>
+        <button id="logout-btn" style="display:none;">Cerrar sesión</button>
+    </div>
+
+</nav>
+
+<div class="detalle-container">
+
+    <div id="detalle-producto"></div>
+
+</div>
 
 <script src="../js/producto.js"></script>
 <script src="../js/sesion.js"></script>
