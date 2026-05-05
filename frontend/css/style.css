@@ -709,3 +709,410 @@ button {
     font-weight: bold;
 
 }
+
+/* =========================
+   NAVBAR PRO
+========================= */
+
+.navbar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background-color: white;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    box-shadow: 0px 2px 12px rgba(0,0,0,0.08);
+
+}
+
+.logo {
+
+    font-size: 24px;
+    font-weight: bold;
+
+    color: #007BFF;
+
+}
+
+.nav-links {
+
+    display: flex;
+    gap: 25px;
+
+}
+
+.nav-links a {
+
+    text-decoration: none;
+    color: #333;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+.nav-links a:hover {
+
+    color: #007BFF;
+
+}
+
+.nav-user {
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+}
+
+/* RESPONSIVE NAVBAR */
+@media (max-width: 768px) {
+
+    .navbar {
+
+        flex-direction: column;
+        gap: 15px;
+
+        padding: 20px;
+
+    }
+
+    .nav-links {
+
+        flex-wrap: wrap;
+        justify-content: center;
+
+    }
+
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+.mensajes-container {
+
+    width: 95%;
+    max-width: 1000px;
+
+    margin: 40px auto;
+
+}
+
+.mensajes-header {
+
+    margin-bottom: 30px;
+
+}
+
+.mensajes-header h1 {
+
+    margin-bottom: 10px;
+
+}
+
+.mensajes-header p {
+
+    color: gray;
+
+}
+
+.card-mensaje {
+
+    background-color: white;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.08);
+
+    transition: 0.3s;
+
+}
+
+.card-mensaje:hover {
+
+    transform: translateY(-3px);
+
+}
+
+.mensaje-avatar {
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background-color: #007BFF;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+}
+
+.mensaje-info {
+
+    flex: 1;
+
+}
+
+.mensaje-info h3 {
+
+    margin-bottom: 5px;
+
+}
+
+.mensaje-info p {
+
+    color: gray;
+
+}
+
+.btn-chat {
+
+    white-space: nowrap;
+
+}
+
+/* =========================
+   CHAT PRO
+========================= */
+
+.chat-container {
+
+    max-width: 900px;
+
+    margin: 30px auto;
+
+    background-color: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.1);
+
+}
+
+.chat-header {
+
+    padding: 20px;
+
+    border-bottom: 1px solid #eee;
+
+    background-color: #fafafa;
+
+}
+
+.chat-user {
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+.chat-avatar {
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background-color: #007BFF;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+}
+
+#estado-usuario {
+
+    color: gray;
+    margin-top: 5px;
+
+}
+
+.chat-input-container {
+
+    padding: 20px;
+
+    border-top: 1px solid #eee;
+
+    display: flex;
+
+    gap: 15px;
+
+}
+
+.chat-input-container textarea {
+
+    flex: 1;
+
+    height: 60px;
+
+    border-radius: 12px;
+
+    border: 1px solid #ccc;
+
+    padding: 12px;
+
+    resize: none;
+
+}
+
+.chat-input-container button {
+
+    width: 140px;
+
+}
+
+/* =========================================
+   FIX CHAT LAYOUT PRO
+========================================= */
+
+.chat-container {
+
+    width: 95%;
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+/* HEADER */
+.chat-header {
+
+    width: 100%;
+
+}
+
+/* CHAT */
+.chat-container #chat {
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    border-radius: 0;
+
+    border: none;
+
+    box-shadow: none;
+
+    height: 500px;
+
+    background: #f5f7fb;
+
+    padding: 20px;
+
+}
+
+/* INPUT CONTAINER */
+.chat-input-container {
+
+    width: 100%;
+
+    background: white;
+
+    align-items: center;
+
+}
+
+/* TEXTAREA */
+.chat-input-container textarea {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    margin: 0;
+
+}
+
+/* BOTÓN */
+.chat-input-container button {
+
+    margin: 0;
+
+    height: 60px;
+
+    min-width: 120px;
+
+}
+
+/* MENSAJES */
+.chat-container .mensaje {
+
+    animation: aparecer 0.2s ease;
+
+}
+
+/* ANIMACIÓN */
+@keyframes aparecer {
+
+    from {
+
+        opacity: 0;
+        transform: translateY(10px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform: translateY(0);
+
+    }
+
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .chat-input-container {
+
+        flex-direction: column;
+
+    }
+
+    .chat-input-container button {
+
+        width: 100%;
+
+    }
+
+}

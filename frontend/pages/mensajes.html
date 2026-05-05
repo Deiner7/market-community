@@ -2,27 +2,50 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mis mensajes</title>
+<title>Mensajes</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
 
-<nav>
-    <h2>MarketCommunity</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
 
-    <a href="../index.html">Inicio</a>
-    <a href="publicar.html">Publicar</a>
-    <a href="perfil.html">Mi perfil</a>
-    <a href="mensajes.html">Mensajes</a>
+    <div class="logo">
+        MarketCommunity
+    </div>
 
-    <span id="usuario-info"></span>
-    <button id="logout-btn" style="display:none;">Cerrar sesión</button>
+    <div class="nav-links">
+        <a href="../index.html">Inicio</a>
+        <a href="publicar.html">Publicar</a>
+        <a href="perfil.html">Mi Perfil</a>
+    </div>
+
+    <div class="nav-user">
+        <span id="usuario-info"></span>
+        <button id="logout-btn" style="display:none;">
+            Cerrar sesión
+        </button>
+    </div>
+
 </nav>
 
-<h2>Mis mensajes</h2>
+<!-- CONTENEDOR -->
+<section class="mensajes-container">
 
-<div id="contenedor-mensajes"></div>
+    <div class="mensajes-header">
+
+        <h1>💬 Mis Mensajes</h1>
+
+        <p>
+            Conversaciones con compradores y vendedores
+        </p>
+
+    </div>
+
+    <div id="contenedor-mensajes"></div>
+
+</section>
 
 <script src="../js/sesion.js"></script>
 <script src="../js/mensajes.js"></script>

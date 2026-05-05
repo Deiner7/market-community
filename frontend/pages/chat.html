@@ -8,19 +8,64 @@
 
 <body>
 
-<nav>
-    <a href="../index.html">Inicio</a>
-    <a href="mensajes.html">Mensajes</a>
+<!-- NAVBAR -->
+<nav class="navbar">
+
+    <div class="logo">
+        MarketCommunity
+    </div>
+
+    <div class="nav-links">
+        <a href="../index.html">Inicio</a>
+        <a href="mensajes.html">Mensajes</a>
+    </div>
+
 </nav>
 
-<h2>Chat</h2>
+<!-- CHAT CONTAINER -->
+<section class="chat-container">
 
-<h3 id="nombre-usuario">Chat</h3>
-<p id="estado-usuario"></p>
-<div id="chat"></div>
+    <!-- HEADER -->
+    <div class="chat-header">
 
-<textarea id="mensaje"></textarea><br>
-<button onclick="enviarMensaje()">Enviar</button>
+        <div class="chat-user">
+
+            <div class="chat-avatar">
+                👤
+            </div>
+
+            <div>
+
+                <h2 id="nombre-usuario">
+                    Chat
+                </h2>
+
+                <p id="estado-usuario"></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MENSAJES -->
+    <div id="chat"></div>
+
+    <!-- INPUT -->
+    <div class="chat-input-container">
+
+        <textarea
+            id="mensaje"
+            placeholder="Escribe un mensaje..."
+        ></textarea>
+
+        <button onclick="enviarMensaje()">
+            Enviar
+        </button>
+
+    </div>
+
+</section>
 
 <script src="../js/chat.js"></script>
 
