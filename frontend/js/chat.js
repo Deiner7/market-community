@@ -87,9 +87,14 @@ function enviarMensaje() {
     })
     .then(res => res.text())
     .then(() => {
-        document.getElementById("mensaje").value = "";
-        cargarChat();
-    });
+
+    document.getElementById("mensaje").value = "";
+
+    mostrarToast("Mensaje enviado");
+
+    cargarChat();
+
+});
 }
 
 //  Actualizar actividad (online)
