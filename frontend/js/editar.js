@@ -1,26 +1,66 @@
 const params = new URLSearchParams(window.location.search);
+
 const id = params.get("id");
 
-// Cargar datos
+// CARGAR PRODUCTO
 fetch(`http://localhost/market-community/backend/obtener_producto.php?id=${id}`)
     .then(res => res.json())
     .then(producto => {
 
-        document.getElementById("id_producto").value = producto.id_producto;
-        document.getElementById("titulo").value = producto.titulo;
-        document.getElementById("descripcion").value = producto.descripcion;
-        document.getElementById("precio").value = producto.precio;
+        document.getElementById("id_producto").value =
+            producto.id_producto;
+
+        document.getElementById("titulo").value =
+            producto.titulo;
+
+        document.getElementById("descripcion").value =
+            producto.descripcion;
+
+        document.getElementById("precio").value =
+            producto.precio;
+
+    })
+    .catch(error => {
+
+        console.error(error);
+
+        mostrarToast("Error cargando producto", "error");
+
     });
 
-// Actualizar
-document.getElementById("form-editar").addEventListener("submit", function(e) {
+// ACTUALIZAR
+document.getElementById("form-editar")
+.addEventListener("submit", function(e) {
+
     e.preventDefault();
 
+    const boton = document.querySelector(".auth-btn");
+
+    boton.disabled = true;
+
+    boton.innerText = "Actualizando...";
+
     const datos = new URLSearchParams();
-    datos.append("id_producto", document.getElementById("id_producto").value);
-    datos.append("titulo", document.getElementById("titulo").value);
-    datos.append("descripcion", document.getElementById("descripcion").value);
-    datos.append("precio", document.getElementById("precio").value);
+
+    datos.append(
+        "id_producto",
+        document.getElementById("id_producto").value
+    );
+
+    datos.append(
+        "titulo",
+        document.getElementById("titulo").value
+    );
+
+    datos.append(
+        "descripcion",
+        document.getElementById("descripcion").value
+    );
+
+    datos.append(
+        "precio",
+        document.getElementById("precio").value
+    );
 
     fetch("http://localhost/market-community/backend/editar_producto.php", {
         method: "POST",
@@ -28,7 +68,28 @@ document.getElementById("form-editar").addEventListener("submit", function(e) {
     })
     .then(res => res.text())
     .then(data => {
-        alert(data);
-        window.location.href = "perfil.html";
+
+        mostrarToast("Producto actualizado");
+
+        boton.innerText = "Actualizado";
+
+        setTimeout(() => {
+
+            window.location.href = "perfil.html";
+
+        }, 1200);
+
+    })
+    .catch(error => {
+
+        console.error(error);
+
+        mostrarToast("Error actualizando", "error");
+
+        boton.disabled = false;
+
+        boton.innerText = "Actualizar Producto";
+
     });
+
 });
