@@ -24,7 +24,7 @@ if (!$usuario["ultima_actividad"]) {
 $ultima = strtotime($usuario["ultima_actividad"]);
 $ahora = strtotime(date("Y-m-d H:i:s"));
 
-//  DEBUG (puedes quitar luego)
+//  DEBUG 
 // echo "Ultima: $ultima - Ahora: $ahora";
 
 //  margen más amplio para evitar errores
